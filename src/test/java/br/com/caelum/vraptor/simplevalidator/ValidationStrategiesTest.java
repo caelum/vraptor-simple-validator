@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.simplevalidator;
 
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerThan;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.matches;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmpty;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmptyNorNull;
@@ -72,6 +74,20 @@ public class ValidationStrategiesTest {
 	public void should_verify_if_string_matches() {
 		String errorKey = "its.empty";
 		gnarusValidator.validate("my_test", matches("my.test").key(errorKey));
+		verify(messageHelper).addError(errorKey);
+	}
+	
+	@Test
+	public void should_verify_if_number_is_bigger_than_other() {
+		String errorKey = "its.empty";
+		gnarusValidator.validate(1l, biggerThan(0l).key(errorKey));
+		verify(messageHelper).addError(errorKey);
+	}
+	
+	@Test
+	public void should_verify_if_number_is_less_than_other() {
+		String errorKey = "its.empty";
+		gnarusValidator.validate(0l, lessThan(1l).key(errorKey));
 		verify(messageHelper).addError(errorKey);
 	}
 	

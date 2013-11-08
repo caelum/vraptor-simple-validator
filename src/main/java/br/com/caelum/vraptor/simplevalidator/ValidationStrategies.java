@@ -40,5 +40,23 @@ public class ValidationStrategies {
 		};
 	}
 	
+	public static DefaultValidationStrategy<Long> lessThan(final Long bigger) {
+		return new DefaultValidationStrategy<Long>() {
+			@Override
+			public void addErrors(Long number) {
+				if(number < bigger) addError();
+			}
+		};
+	}
+	
+	public static DefaultValidationStrategy<Long> biggerThan(final Long lesser) {
+		return new DefaultValidationStrategy<Long>() {
+			@Override
+			public void addErrors(Long number) {
+				if(number > lesser) addError();
+			}
+		};
+	}
+	
 	
 }

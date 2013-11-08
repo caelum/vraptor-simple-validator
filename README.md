@@ -3,7 +3,7 @@ Vraptor Simple Validator
 
 ##How to use
 
-1. Inject the `SimpleValidator` at your controller:
+### 1 - Inject the `SimpleValidator` at your controller:
 
 ```
 @Resource
@@ -18,7 +18,7 @@ public class DogController{
 
 ```
 
-2. Call `validator.validate` on the desired action. The first argument is the object that you want to validate and
+### 2 - Call `validator.validate` on the desired action. The first argument is the object that you want to validate and
 the second is the `ValidationStrategy`. 
 
 By the way, the `vraptor-simple-validator` provides a diversity of defaults validations that you may want to use. 
@@ -42,14 +42,14 @@ The validation call will as simple as that:
 
 You can create a custom `ValidationStrategy` in a very simple way, this will be covered later.
 
-3. Specify where to go when the validation fail. This is just like you would do with the default vraptor `Validator`:
+### 3 - Specify where to go when the validation fail. This is just like you would do with the default vraptor `Validator`:
 
 ```
 	validator.validate(dog.getName(), maches("Bob").key("properties.key"))
 			 .onErrorRedirectTo(this).createDog();
 ```
 
-4. Optional: Tell the validator to add a confirmation message if everything goes fine.
+### 4 - Optional: Tell the validator to add a confirmation message if everything goes fine.
 
 ```
 	validator.validate(dog.getName(), maches("Bob").key("name.should.be.bob"))
@@ -58,7 +58,7 @@ You can create a custom `ValidationStrategy` in a very simple way, this will be 
 
 ```
 
-5. Display errors or confirmation in view.
+### 5 - Display errors or confirmation in view.
 The list of errors will be automatically inserted on the request with the name `errors`, you will only need to iterate that list:
 
 ```

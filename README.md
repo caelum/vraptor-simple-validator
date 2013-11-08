@@ -18,7 +18,9 @@ public class DogController{
 
 ```
 
-### 2 - Call `validator.validate` on the desired action. The first argument is the object that you want to validate and
+### 2 - Call `validator.validate` on the desired action.
+
+The first argument is the object that you want to validate and
 the second is the `ValidationStrategy`. 
 
 By the way, the `vraptor-simple-validator` provides a diversity of defaults validations that you may want to use. 
@@ -42,7 +44,9 @@ The validation call will as simple as that:
 
 You can create a custom `ValidationStrategy` in a very simple way, this will be covered later.
 
-### 3 - Specify where to go when the validation fail. This is just like you would do with the default vraptor `Validator`:
+### 3 - Specify where to go when the validation fail.
+
+ This is just like you would do with the default vraptor `Validator`:
 
 ```
 	validator.validate(dog.getName(), maches("Bob").key("properties.key"))

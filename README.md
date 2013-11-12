@@ -39,7 +39,7 @@ When using them you will need to tell which `message.properties` key you want to
 The validation call will as simple as that:
 
 ```
-	validator.validate(dog.getName(), ValidationStrategies.matches("Bob").key("properties.key"));
+	validator.validate(dog.getName(), ValidationStrategies.matches("Bob").key("wrong.name"));
 ```
 
 It is also very simple to use more than one `ValidationStrategy` at an object:
@@ -54,8 +54,8 @@ It is also very simple to use more than one `ValidationStrategy` at an object:
 And to validate more than one object:
 
 ```
-	validator.validate(dog.getName(), matches("Bob").key("properties.key"))
-			 .validate(dog.getNumberOfPaws(), lessThan(4l));
+	validator.validate(dog.getName(), matches("Bob").key("wrong.name"))
+			 .validate(dog.getNumberOfPaws(), lessThan(4l).key("mutant.dog"));
 ```
 
 You can create a custom `ValidationStrategy` in a very simple way, this will be covered later.
@@ -65,7 +65,7 @@ You can create a custom `ValidationStrategy` in a very simple way, this will be 
  This is just like you would do with the default vraptor `Validator`:
 
 ```
-	validator.validate(dog.getName(), matches("Bob").key("properties.key"))
+	validator.validate(dog.getName(), matches("Bob").key("wrong.name"))
 			 .onErrorRedirectTo(this).createDog();
 ```
 

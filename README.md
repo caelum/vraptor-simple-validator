@@ -5,9 +5,9 @@ Vraptor Simple Validator
 
 ### 1 - Inject the `SimpleValidator` at your controller:
 
-```
+```java
 @Resource
-public class DogController{
+public class DogController {
 	
 	private SimpleValidator validator;
 
@@ -38,24 +38,24 @@ Curretly, the following validations are implemented:
 When using them you will need to tell which `message.properties` key you want to use on error.
 The validation call will as simple as that:
 
-```
-	validator.validate(dog.getName(), ValidationStrategies.matches("Bob").key("wrong.name"));
+```java
+validator.validate(dog.getName(), ValidationStrategies.matches("Bob").key("wrong.name"));
 ```
 
 It is also very simple to use more than one `ValidationStrategy` at an object:
 
-```
-	validator.validate(dog.getName(),
-						matches("Bob").key("wrong.name"),
-						notNull().key("null.name")
-					  );
+```java
+validator.validate(dog.getName(),
+					matches("Bob").key("wrong.name"),
+					notNull().key("null.name")
+				  );
 ```
 
 And to validate more than one object:
 
-```
-	validator.validate(dog.getName(), matches("Bob").key("wrong.name"))
-			 .validate(dog.getNumberOfPaws(), lessThan(4l).key("mutant.dog"));
+```java
+validator.validate(dog.getName(), matches("Bob").key("wrong.name"))
+		 .validate(dog.getNumberOfPaws(), lessThan(4l).key("mutant.dog"));
 ```
 
 You can create a custom `ValidationStrategy` in a very simple way, this will be covered later.
@@ -64,24 +64,23 @@ You can create a custom `ValidationStrategy` in a very simple way, this will be 
 
  This is just like you would do with the default vraptor `Validator`:
 
-```
-	validator.validate(dog.getName(), matches("Bob").key("wrong.name"))
-			 .onErrorRedirectTo(this).createDog();
+```java
+validator.validate(dog.getName(), matches("Bob").key("wrong.name"))
+		 .onErrorRedirectTo(this).createDog();
 ```
 
 ### 4 - Optional: Tell the validator to add a confirmation message if everything goes fine.
 
-```
-	validator.validate(dog.getName(), matches("Bob").key("name.should.be.bob"))
-			 .onSuccessAddConfirmationMessage("confirmation.key")
-			 .onErrorRedirectTo(this).createDog();
-
+```java
+validator.validate(dog.getName(), matches("Bob").key("name.should.be.bob"))
+		 .onSuccessAddConfirmationMessage("confirmation.key")
+		 .onErrorRedirectTo(this).createDog();
 ```
 
 ### 5 - Display errors or confirmation in view.
 The list of errors will be automatically inserted on the request with the name `errors`, you will only need to iterate that list:
 
-```
+```jsp
 <c:if test="${not empty errors}">
 	<ul class="error-messages">
 		<c:forEach var="error" items="${errors}">
@@ -93,7 +92,7 @@ The list of errors will be automatically inserted on the request with the name `
 
 The confirmation will be inserted with the name `confirmations`:
 
-```
+```jsp
 <c:if test="${not empty confirmations}">
 	<ul class="confirmation-messages">
 		<c:forEach var="confirmation" items="${confirmations}">
@@ -108,9 +107,9 @@ Tip: of course, the structure is exactly the same, so you can create a taglib to
 
 To create a `ValidationStrategy`, only need to create a class annotated with `@Component` that extends `ValidationStrategy` and implement the method `addErrors` as you desire:
 
-```
+```java
 @Component
-public class DogValidator extends ValidationStrategy<Dog>{
+public class DogValidator extends ValidationStrategy<Dog> {
 	@Override
 	public void addErrors(Dog dog) {
 		if(dog == null) addError("invalid.dog");
@@ -127,7 +126,7 @@ but they will be included at the same list(`errors`);
 The `confirmation` will be included at the `confirmations` list.
 
 To use the custom strategy, just pass its class to the validator:
-```
+```java
 validator.validate(dog, DogValidator.class)
 		 .onSuccessAddConfirmationMessage("confirmation.key")
 		 .onErrorRedirectTo(this).createDog();
@@ -140,8 +139,8 @@ validator.validate(dog, DogValidator.class)
 What does it mean? Well, you don't need to place an `if` verifying if the validation was ok or something like that.
 You can just call the validator:
 
-```
-public void newDog(Dog dog){
+```java
+public void newDog(Dog dog) {
 
 	validator.validate(dog, DogValidator.class)
 			 .onSuccessAddConfirmationMessage("confirmation.key")
@@ -154,8 +153,8 @@ public void newDog(Dog dog){
 
 If you use `vraptor-hibernate` or `vraptor-jpa` to controll the transaction for you, it will rollback if there are validation errors
 
-```
-public void newDog(Dog dog){
+```java
+public void newDog(Dog dog) {
 	dogs.save(dog) // The dog won't be saved if validation fails
 
 	validator.validate(dog, DogValidator.class)

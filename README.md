@@ -137,7 +137,7 @@ validator.validate(dog, DogValidator.class)
 
 ### 1 - The program flow will be interrupted.
 
-What does it mean? Well, you don't need to place an if verifying if the validation was ok or something like that.
+What does it mean? Well, you don't need to place an `if` verifying if the validation was ok or something like that.
 You can just call the validator:
 
 ```
@@ -153,6 +153,17 @@ public void newDog(Dog dog){
 ### 2 - The db transaction will rollback
 
 If you use `vraptor-hibernate` or `vraptor-jpa` to controll the transaction for you, it will rollback if there are validation errors
+
+```
+public void newDog(Dog dog){
+	dogs.save(dog) // The dog won't be saved if validation fails
+
+	validator.validate(dog, DogValidator.class)
+			 .onSuccessAddConfirmationMessage("confirmation.key")
+			 .onErrorRedirectTo(this).createDog();
+	
+}
+```
 
 ### 3 - The errors will be included at your jsp
 

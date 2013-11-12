@@ -28,18 +28,34 @@ By the way, the `vraptor-simple-validator` provides a diversity of defaults vali
 You can access them through static methods of the class `ValidationStrategies`
 Curretly, the following validations are implemented:
 
-1. matches("someString") - Check if the `String`s are equals to each other
-2. notEmpty() - Check if the given `List` is not empty
-3. notEmptyNorNull() - Check if the given `String` is not empty/null
-4. notNull() - Check if the given `Object` is not null
-5. lessThan(12l) - Check if the given long is less than 12
-6. biggerThan(12l) - Check if the given long is bigger than 12
+1. `matches("someString")` - Check if the `String`s are equals to each other
+2. `notEmpty()` - Check if the given `List` is not empty
+3. `notEmptyNorNull()` - Check if the given `String` is not empty/null
+4. `notNull()` - Check if the given `Object` is not null
+5. `lessThan(12l)` - Check if the given long is less than 12
+6. `biggerThan(12l)` - Check if the given long is bigger than 12
 
 When using them you will need to tell which `message.properties` key you want to use on error.
 The validation call will as simple as that:
 
 ```
-	validator.validate(dog.getName(), ValidationStrategies.maches("Bob").key("properties.key"));
+	validator.validate(dog.getName(), ValidationStrategies.matches("Bob").key("properties.key"));
+```
+
+It is also very simple to use more than one `ValidationStrategy` at an object:
+
+```
+	validator.validate(dog.getName(),
+						matches("Bob").key("properties.key"),
+						notNull()
+					  );
+```
+
+And to validate more than one object:
+
+```
+	validator.validate(dog.getName(), matches("Bob").key("properties.key"))
+			 .validate(dog.getNumberOfPaws(), lessThan(4l));
 ```
 
 You can create a custom `ValidationStrategy` in a very simple way, this will be covered later.
@@ -49,14 +65,14 @@ You can create a custom `ValidationStrategy` in a very simple way, this will be 
  This is just like you would do with the default vraptor `Validator`:
 
 ```
-	validator.validate(dog.getName(), maches("Bob").key("properties.key"))
+	validator.validate(dog.getName(), matches("Bob").key("properties.key"))
 			 .onErrorRedirectTo(this).createDog();
 ```
 
 ### 4 - Optional: Tell the validator to add a confirmation message if everything goes fine.
 
 ```
-	validator.validate(dog.getName(), maches("Bob").key("name.should.be.bob"))
+	validator.validate(dog.getName(), matches("Bob").key("name.should.be.bob"))
 			 .onSuccessAddConfirmationMessage("confirmation.key")
 			 .onErrorRedirectTo(this).createDog();
 
@@ -104,6 +120,11 @@ public class DogValidator extends ValidationStrategy<Dog>{
 }
 ```
 Tip: Yep, it is a vraptor component, so you can inject whatever you want at its constructor.
+
+At your `ValidationStrategy` you can call `addError`, `addAlert` or `addConfirmation`.
+The difference between `addError` and `addAlert` is just the category(*error* or *alert*),
+but they will be included at the same list(`errors`);
+The `confirmation` will be included at the `confirmations` list.
 
 To use the custom strategy, just pass its class to the validator:
 ```

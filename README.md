@@ -46,8 +46,8 @@ It is also very simple to use more than one `ValidationStrategy` at an object:
 
 ```
 	validator.validate(dog.getName(),
-						matches("Bob").key("properties.key"),
-						notNull()
+						matches("Bob").key("wrong.name"),
+						notNull().key("null.name")
 					  );
 ```
 

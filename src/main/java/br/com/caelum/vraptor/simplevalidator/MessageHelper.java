@@ -58,7 +58,7 @@ public class MessageHelper {
 	}
 	
 	private List<Message> copy(List<Message> list) {
-		return new ArrayList<>(list);
+		return new ArrayList<Message>(list);
 	}
 	
 	private void clean() {

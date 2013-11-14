@@ -45,7 +45,7 @@ public class ValidationStrategiesTest {
 	@Test
 	public void should_verify_if_list_is_empty() {
 		String errorKey = "its.empty";
-		gnarusValidator.validate(new ArrayList<>(), notEmpty().key(errorKey));
+		gnarusValidator.validate(new ArrayList<String>(), notEmpty().key(errorKey));
 		verify(messageHelper).addError(errorKey);
 	}
 	

@@ -68,13 +68,6 @@ public class SimpleValidatorTest {
 		verify(messageHelper, never()).addError(ERROR_KEY);
 	}
 	
-	@Test
-	public void should_not_add_two_errors() {
-		dogValidator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY));
-		verify(messageHelper, times(1)).addError(ERROR_KEY);
-	}
-	
-	
 	public static ValidationStrategy<Dog> name(){
 		return new ValidationStrategy<Dog>() {
 			@Override

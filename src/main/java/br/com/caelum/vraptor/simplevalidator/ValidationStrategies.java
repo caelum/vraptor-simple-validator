@@ -49,7 +49,7 @@ public class ValidationStrategies {
 		return new DefaultValidationStrategy<Long>() {
 			@Override
 			public void addErrors(Long number) {
-				if(number < bigger) addError();
+				if(number >= bigger) addError();
 			}
 		};
 	}
@@ -58,7 +58,7 @@ public class ValidationStrategies {
 		return new DefaultValidationStrategy<Long>() {
 			@Override
 			public void addErrors(Long number) {
-				if(number > lesser) addError();
+				if(number <= lesser) addError();
 			}
 		};
 	}

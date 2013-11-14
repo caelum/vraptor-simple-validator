@@ -64,7 +64,7 @@ public class SimpleValidatorTest {
 	
 	@Test
 	public void should_not_add_errors_if_everyting_goes_fine() {
-		dogValidator.validate(1l, and(lessThan(0l), biggerThan(2l)).key(ERROR_KEY));
+		dogValidator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY));
 		verify(messageHelper, never()).addError(ERROR_KEY);
 	}
 	

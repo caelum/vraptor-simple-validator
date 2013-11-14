@@ -75,13 +75,13 @@ public class ValidationStrategiesTest {
 	
 	@Test
 	public void should_verify_if_number_is_bigger_than_other() {
-		gnarusValidator.validate(1l, biggerThan(0l).key(ERROR_KEY));
+		gnarusValidator.validate(0l, biggerThan(1l).key(ERROR_KEY));
 		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_verify_if_number_is_less_than_other() {
-		gnarusValidator.validate(0l, lessThan(1l).key(ERROR_KEY));
+		gnarusValidator.validate(1l, lessThan(0l).key(ERROR_KEY));
 		verify(messageHelper).addError(ERROR_KEY);
 	}
 	

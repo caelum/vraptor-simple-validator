@@ -19,4 +19,5 @@ public abstract class DefaultValidationStrategy<T> extends ValidationStrategy<T>
 	protected void addAlert() {
 		super.addAlert(message, parameters);
 	}
+	
 }

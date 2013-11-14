@@ -26,6 +26,7 @@ import br.com.caelum.vraptor.util.test.MockValidator;
 @RunWith(MockitoJUnitRunner.class)
 public class ValidationStrategiesTest {
 
+	protected static final String ERROR_KEY = "error.key";
 	private SimpleValidator gnarusValidator;
 	private MockValidator defaultValidator;
 	@Mock
@@ -44,59 +45,51 @@ public class ValidationStrategiesTest {
 	
 	@Test
 	public void should_verify_if_list_is_empty() {
-		String errorKey = "its.empty";
-		gnarusValidator.validate(new ArrayList<String>(), notEmpty().key(errorKey));
-		verify(messageHelper).addError(errorKey);
+		gnarusValidator.validate(new ArrayList<String>(), notEmpty().key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_verify_if_string_is_null() {
-		String errorKey = "its.empty";
-		gnarusValidator.validate(null, notEmptyNorNull().key(errorKey));
-		verify(messageHelper).addError(errorKey);
+		gnarusValidator.validate(null, notEmptyNorNull().key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_verify_if_string_is_empty() {
-		String errorKey = "its.empty";
-		gnarusValidator.validate("", notEmptyNorNull().key(errorKey));
-		verify(messageHelper).addError(errorKey);
+		gnarusValidator.validate("", notEmptyNorNull().key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_verify_if_something_is_null() {
-		String errorKey = "its.empty";
-		gnarusValidator.validate(null, notNull().key(errorKey));
-		verify(messageHelper).addError(errorKey);
+		gnarusValidator.validate(null, notNull().key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_verify_if_string_matches() {
-		String errorKey = "its.empty";
-		gnarusValidator.validate("my_test", matches("my.test").key(errorKey));
-		verify(messageHelper).addError(errorKey);
+		gnarusValidator.validate("my_test", matches("my.test").key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_verify_if_number_is_bigger_than_other() {
-		String errorKey = "its.empty";
-		gnarusValidator.validate(1l, biggerThan(0l).key(errorKey));
-		verify(messageHelper).addError(errorKey);
+		gnarusValidator.validate(1l, biggerThan(0l).key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_verify_if_number_is_less_than_other() {
-		String errorKey = "its.empty";
-		gnarusValidator.validate(0l, lessThan(1l).key(errorKey));
-		verify(messageHelper).addError(errorKey);
+		gnarusValidator.validate(0l, lessThan(1l).key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
 	}
 	
 	@Test
 	public void should_not_add_error_if_string_matches_actually() {
-		String errorKey = "its.empty";
 		String matchingString = "my_test";
-		gnarusValidator.validate(matchingString, matches(matchingString).key(errorKey));
-		verify(messageHelper, never()).addError(errorKey);
+		gnarusValidator.validate(matchingString, matches(matchingString).key(ERROR_KEY));
+		verify(messageHelper, never()).addError(ERROR_KEY);
 	}
 	
 	@Test(expected=IllegalStateException.class)

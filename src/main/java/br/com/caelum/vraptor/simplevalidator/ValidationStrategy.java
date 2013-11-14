@@ -4,14 +4,19 @@ import br.com.caelum.vraptor.Validator;
 
 public abstract class ValidationStrategy<T> {
 	private MessageHelper messages;
+	private Validator validator;
 	
 	public abstract void addErrors(T t);
 	
-	public ValidationStrategy<T> process(T t, Validator validator, MessageHelper messageHelper) {
+	protected ValidationStrategy<T> setDependencies(Validator validator, MessageHelper messageHelper) {
+		this.validator = validator;
 		this.messages = messageHelper;
+		return this;
+	}
+	
+	protected void process(T t) {
 		addErrors(t);
 		validator.validate(t);
-		return this;
 	}
 	
 	protected void addError(String message, Object...parameters) {

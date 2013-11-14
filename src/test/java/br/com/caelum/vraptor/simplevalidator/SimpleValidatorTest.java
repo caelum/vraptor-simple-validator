@@ -1,6 +1,12 @@
 package br.com.caelum.vraptor.simplevalidator;
 
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.and;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerThan;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategiesTest.ERROR_KEY;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +55,25 @@ public class SimpleValidatorTest {
 		dogValidator.validate(dog, name());
 		verify(defaultValidator).validate(dog);
 	}
+	
+	@Test
+	public void should_verify_multiple_validations_with_one_key() {
+		dogValidator.validate(0l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY));
+		verify(messageHelper).addError(ERROR_KEY);
+	}
+	
+	@Test
+	public void should_not_add_errors_if_everyting_goes_fine() {
+		dogValidator.validate(1l, and(lessThan(0l), biggerThan(2l)).key(ERROR_KEY));
+		verify(messageHelper, never()).addError(ERROR_KEY);
+	}
+	
+	@Test
+	public void should_not_add_two_errors() {
+		dogValidator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY));
+		verify(messageHelper, times(1)).addError(ERROR_KEY);
+	}
+	
 	
 	public static ValidationStrategy<Dog> name(){
 		return new ValidationStrategy<Dog>() {

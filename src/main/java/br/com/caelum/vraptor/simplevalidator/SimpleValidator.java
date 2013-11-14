@@ -36,7 +36,7 @@ public class SimpleValidator{
 
 	public <T> SimpleValidator validate(T t, ValidationStrategy<T> validationStrategy) {
 		currentStrategy = validationStrategy;
-		validationStrategy.process(t, validator, messageHelper);
+		validationStrategy.setDependencies(validator, messageHelper).process(t);
 		return this;
 	}
 	

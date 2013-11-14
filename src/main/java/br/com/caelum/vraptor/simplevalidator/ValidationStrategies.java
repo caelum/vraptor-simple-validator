@@ -4,6 +4,11 @@ import java.util.List;
 
 public class ValidationStrategies {
 	
+	public static <T> DefaultValidationStrategy<T> and(final DefaultValidationStrategy<T>...validations){
+		return new AndValidationStrategy<T>(validations);
+		
+	}
+	
 	public static DefaultValidationStrategy<List> notEmpty(){
 		return new DefaultValidationStrategy<List>() {
 			@Override

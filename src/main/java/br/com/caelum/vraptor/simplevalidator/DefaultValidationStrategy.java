@@ -12,12 +12,17 @@ public abstract class DefaultValidationStrategy<T> extends ValidationStrategy<T>
 	}
 	
 	protected void addError() {
-		if(message == null) throw new IllegalStateException("Please, give me the message.properties key so I can tell you the error. Syntax: validator.validate(obj, strategy().key(\"my.key\"))");
+		verifyPresenceOfKey();
 		super.addError(message, parameters);
 	}
 	
 	protected void addAlert() {
+		verifyPresenceOfKey();
 		super.addAlert(message, parameters);
+	}
+	
+	private void verifyPresenceOfKey() {
+		if(message == null) throw new IllegalStateException("Please, give me the message.properties key so I can tell you the error. Syntax: validator.validate(obj, strategy().key(\"my.key\"))");
 	}
 	
 }

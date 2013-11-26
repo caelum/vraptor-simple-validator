@@ -10,10 +10,10 @@ public class SimpleValidator{
 	
 	private final Container container;
 	private Validator validator;
-	private MessageHelper messageHelper;
+	private DefaultMessageHelper messageHelper;
 	private ValidationStrategy<?> currentStrategy;
 
-	public SimpleValidator(Validator validator, Container container, MessageHelper messageHelper) {
+	public SimpleValidator(Validator validator, Container container, DefaultMessageHelper messageHelper) {
 		this.validator = validator;
 		this.container = container;
 		this.messageHelper = messageHelper;

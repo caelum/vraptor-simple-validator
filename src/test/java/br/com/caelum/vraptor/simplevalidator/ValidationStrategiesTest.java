@@ -32,7 +32,7 @@ public class ValidationStrategiesTest {
 	@Mock
 	private Container container;
 	@Mock
-	private MessageHelper messageHelper;
+	private DefaultMessageHelper messageHelper;
 	
 	@Before
 	public void setUp() {

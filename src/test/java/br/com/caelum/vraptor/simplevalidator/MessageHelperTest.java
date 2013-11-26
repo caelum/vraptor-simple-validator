@@ -1,6 +1,6 @@
 package br.com.caelum.vraptor.simplevalidator;
 
-import static br.com.caelum.vraptor.simplevalidator.MessageHelper.CONFIRMATIONS_KEY;
+import static br.com.caelum.vraptor.simplevalidator.DefaultMessageHelper.CONFIRMATIONS_KEY;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.atLeastOnce;
@@ -22,14 +22,14 @@ public class MessageHelperTest {
 
 	private MockValidator validator;
 	private MockResult result;
-	private MessageHelper helper;
+	private DefaultMessageHelper helper;
 
 	@Before
 	public void setUp() {
 		validator = spy(new MockValidator());
 		result = spy(new MockResult());
 		MessageFactory factory = mock(MessageFactory.class);
-		helper = new MessageHelper(validator, result, factory);
+		helper = new DefaultMessageHelper(validator, result, factory);
 	}
 	
 	@Test

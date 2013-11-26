@@ -9,7 +9,7 @@ import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.validator.Message;
 
 @Component
-public class MessageHelper {
+public class DefaultMessageHelper implements MessageHelper {
 
 	protected static final String CONFIRMATIONS_KEY = "confirmations";
 	protected static final String ALERTS_KEY = "alerts";
@@ -22,23 +22,23 @@ public class MessageHelper {
 	private List<Message> alerts = new ArrayList<Message>();
 	private List<Message> errors = new ArrayList<Message>();
 
-	public MessageHelper(Validator validator, Result result, MessageFactory factory) {
+	public DefaultMessageHelper(Validator validator, Result result, MessageFactory factory) {
 		this.validator = validator;
 		this.result = result;
 		this.factory = factory;
 	}
 
-	public MessageHelper addConfirmation(String message, Object...parameters) {
+	public DefaultMessageHelper addConfirmation(String message, Object...parameters) {
 		confirmations.add(factory.i18nConfirmation(message, parameters));
 		return this;
 	}
 
-	public MessageHelper addAlert(String message, Object...parameters) {
+	public DefaultMessageHelper addAlert(String message, Object...parameters) {
 		alerts.add(factory.i18nAlert(message, parameters));
 		return this;
 	}
 	
-	public MessageHelper addError(String message, Object...parameters) {
+	public DefaultMessageHelper addError(String message, Object...parameters) {
 		errors.add(factory.i18nError(message, parameters));
 		return this;
 	}

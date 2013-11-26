@@ -11,12 +11,15 @@ import br.com.caelum.vraptor.validator.Validations;
 public class FakeValidator implements Validator {
 
 	private Validator validator;
+	private boolean invalid;
 
 	public FakeValidator(Validator validator) {
 		this.validator = validator;
 	}
 
-	private boolean invalid;
+	public boolean isInvalid() {
+		return invalid;
+	}
 
 	@Override
 	public void add(Message message) {
@@ -24,10 +27,6 @@ public class FakeValidator implements Validator {
 		invalid = true;
 	}
 	
-	public boolean isInvalid() {
-		return invalid;
-	}
-
 	@Override
 	public void checking(Validations rules) {
 		validator.checking(rules);

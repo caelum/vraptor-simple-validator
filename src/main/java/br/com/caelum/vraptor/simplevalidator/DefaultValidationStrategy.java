@@ -1,6 +1,7 @@
 package br.com.caelum.vraptor.simplevalidator;
 
 
+
 public abstract class DefaultValidationStrategy<T> extends ValidationStrategy<T> {
 	
 	private String message;
@@ -25,5 +26,12 @@ public abstract class DefaultValidationStrategy<T> extends ValidationStrategy<T>
 	private void verifyPresenceOfKey() {
 		if(message == null) throw new IllegalStateException("Please, give me the message.properties key so I can tell you the error. Syntax: validator.validate(obj, strategy().key(\"my.key\"))");
 	}
+
+	@Override
+	public void addErrors(T t) {
+		if(shouldAddError(t)) addError();
+	}
+	
+	protected abstract boolean shouldAddError(T t);
 	
 }

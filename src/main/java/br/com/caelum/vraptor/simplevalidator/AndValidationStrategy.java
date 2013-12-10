@@ -14,14 +14,14 @@ public class AndValidationStrategy<T> extends DefaultValidationStrategy<T> {
 	}
 
 	@Override
-	public void addErrors(T obj) {
+	public boolean shouldAddError(T obj) {
 		for (DefaultValidationStrategy<T> validation : validations) {
 			validation.addErrors(obj);
 		}
 		boolean thereAreValidationErrors = fakeValidator.isInvalid() || fakeMessageHelper.isInvalid();
-		if(thereAreValidationErrors) addError();
+		return thereAreValidationErrors;
 	}
-	
+		
 	@Override
 	public DefaultValidationStrategy<T> key(String message,
 			Object... parameters) {

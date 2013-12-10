@@ -1,13 +1,11 @@
 package br.com.caelum.vraptor.simplevalidator;
 
-
-
-public abstract class DefaultValidationStrategy<T> extends ValidationStrategy<T> {
+public abstract class AbstractValidationStrategy<T> extends ValidationStrategy<T> {
 	
 	private String message;
 	private Object[] parameters;
 
-	public DefaultValidationStrategy<T> key(String message, Object...parameters){
+	public AbstractValidationStrategy<T> key(String message, Object...parameters){
 		this.message = message;
 		this.parameters = parameters;
 		return this;
@@ -33,5 +31,4 @@ public abstract class DefaultValidationStrategy<T> extends ValidationStrategy<T>
 	}
 	
 	protected abstract boolean shouldAddError(T t);
-	
 }

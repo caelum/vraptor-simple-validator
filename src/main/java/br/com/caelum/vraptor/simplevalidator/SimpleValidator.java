@@ -10,39 +10,58 @@ public class SimpleValidator{
 	
 	private final Container container;
 	private Validator validator;
-	private DefaultMessageHelper messageHelper;
-	private ValidationStrategy<?> currentStrategy;
+	private DefaultValidationStrategyHelper strategy;
 
-	public SimpleValidator(Validator validator, Container container, DefaultMessageHelper messageHelper) {
+	public SimpleValidator(Validator validator, Container container, DefaultValidationStrategyHelper strategy) {
 		this.validator = validator;
 		this.container = container;
-		this.messageHelper = messageHelper;
+		this.strategy = strategy;
 	}
 	
-	public <T> SimpleValidator validate(T t, Class<? extends ValidationStrategy<T>> validationStrategy) {
+	public <T> SimpleValidator validate(T t, Class<? extends CustomValidationStrategy<T>> validationStrategy) {
 		return validate(t, container.instanceFor(validationStrategy));
 	}
 	
-	public <T> SimpleValidator validate(T t, final ValidationStrategy<T>...validationStrategies) {
-		return validate(t, new ValidationStrategy<T>() {
+	public <T> SimpleValidator validate(T t, final CustomValidationStrategy<T>...validationStrategies) {
+		return validate(t, new CustomValidationStrategy<T>() {
 			@Override
 			public void addErrors(T t) {
-				for (ValidationStrategy<T> validationStrategy : validationStrategies) {
-					validationStrategy.setDependencies(validator, messageHelper);
+				for (CustomValidationStrategy<T> validationStrategy : validationStrategies) {
 					validationStrategy.addErrors(t);
 				}
 			}
 		});
 	}
 
-	public <T> SimpleValidator validate(T t, ValidationStrategy<T> validationStrategy) {
-		currentStrategy = validationStrategy;
-		validationStrategy.setDependencies(validator, messageHelper).process(t);
+	public <T> SimpleValidator validate(T t, CustomValidationStrategy<T> validationStrategy) {
+		validationStrategy.addErrors(t);
+		validator.validate(t);
 		return this;
 	}
 	
+	public <T> SimpleValidator validate(T t, SimpleValidationStrategy<T> validationStrategy) {
+		validationStrategy.addErrors(t, strategy);
+		return this;
+	}
+	
+	public <T> SimpleValidator validate(T t, final SimpleValidationStrategy<T>... validationStrategy) {
+		return validate(t, new SimpleValidationStrategy<T>() {
+
+			@Override
+			public void addErrors(T t, ValidationStrategyHelper strategy) {
+				for (SimpleValidationStrategy<T> simpleValidationStrategy : validationStrategy) {
+					simpleValidationStrategy.addErrors(t, strategy);
+				}
+			}
+			
+			protected boolean shouldAddError(T t) {
+				throw new UnsupportedOperationException("This method should never be invocated");
+			}
+		});
+	}
+	
 	public <T> SimpleValidator onSuccessAddConfirmation(String message, Object...parameters) {
-		if(!validator.hasErrors()) currentStrategy.addConfirmation(message, parameters);
+		if(!validator.hasErrors()) strategy.addConfirmation(message, parameters);
 		return this;
 	}
 	

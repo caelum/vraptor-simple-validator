@@ -1,5 +1,6 @@
 package br.com.caelum.vraptor.simplevalidator;
 
+
 public abstract class DefaultValidationStrategy<T> extends ValidationStrategy<T> {
 	
 	private String message;

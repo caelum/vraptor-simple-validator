@@ -3,7 +3,9 @@ package br.com.caelum.vraptor.simplevalidator;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.and;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerThan;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategiesTest.ERROR_KEY;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.matches;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmptyNorNull;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategiesTest.NUMBER_ERROR_KEY;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -23,7 +25,7 @@ import br.com.caelum.vraptor.util.test.MockValidator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleValidatorTest {
-	private SimpleValidator dogValidator;
+	private SimpleValidator validator;
 	private MockValidator defaultValidator;
 	@Mock
 	private Container container;
@@ -36,13 +38,13 @@ public class SimpleValidatorTest {
 		when(messageHelper.addAlert(Mockito.anyString())).thenReturn(messageHelper);
 		when(messageHelper.addError(Mockito.anyString())).thenReturn(messageHelper);
 		when(messageHelper.addConfirmation(Mockito.anyString())).thenReturn(messageHelper);
-		dogValidator = new SimpleValidator(defaultValidator, container, messageHelper);
+		validator = new SimpleValidator(defaultValidator, container, messageHelper);
 	}
 	
 	@Test
 	public void should_add_confirmations_if_it_has_no_validation_error() {
 		String key = "my.confirmation.message";
-		dogValidator.validate(new Dog("A big dog name"), name())
+		validator.validate(new Dog("A big dog name"), name())
 					.onSuccessAddConfirmation(key)
 					.onErrorRedirectTo(new MockResult());
 		
@@ -52,26 +54,47 @@ public class SimpleValidatorTest {
 	@Test
 	public void should_call_default_validators_validate() {
 		Dog dog = new Dog("A big dog name");
-		dogValidator.validate(dog, name());
+		validator.validate(dog, name());
 		verify(defaultValidator).validate(dog);
 	}
 	
 	@Test
 	public void should_verify_multiple_validations_with_one_key() {
-		dogValidator.validate(0l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY));
-		verify(messageHelper).addError(ERROR_KEY);
+		validator.validate(0l, and(lessThan(2l), biggerThan(0l)).key(NUMBER_ERROR_KEY));
+		verify(messageHelper).addError(NUMBER_ERROR_KEY);
 	}
 	
 	@Test
 	public void should_not_add_errors_if_everyting_goes_fine() {
-		dogValidator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY));
-		verify(messageHelper, never()).addError(ERROR_KEY);
+		validator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(NUMBER_ERROR_KEY));
+		verify(messageHelper, never()).addError(NUMBER_ERROR_KEY);
 	}
 	
 	@Test
 	public void should_not_add_two_errors() {
-		dogValidator.validate(1l, and(lessThan(0l), biggerThan(2l)).key(ERROR_KEY));
-		verify(messageHelper, times(1)).addError(ERROR_KEY);
+		validator.validate(1l, and(lessThan(0l), biggerThan(2l)).key(NUMBER_ERROR_KEY));
+		verify(messageHelper, times(1)).addError(NUMBER_ERROR_KEY);
+	}
+
+	@Test
+	public void should_validate_two_different_objects() {
+		String myDogName = "john";
+		validator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(NUMBER_ERROR_KEY))
+					.validate(myDogName, matches(myDogName).key(""));
+		verify(messageHelper, never()).addError(Mockito.anyString());
+	}
+	
+	@Test
+	public void should_validate_two_null_strings() {
+		String emptyPasswordKey = "empty.password";
+		String emptyNewPasswordKey = "empty.new.password";
+		String passwordDoesntMatchesKey = "password.doesnt.matches";
+		validator.validate(null, notEmptyNorNull().key(emptyPasswordKey))
+				 .validate(null, notEmptyNorNull().key(emptyNewPasswordKey),
+								matches(null).key(passwordDoesntMatchesKey));
+		verify(messageHelper, times(1)).addError(emptyNewPasswordKey);
+		verify(messageHelper, times(1)).addError(emptyPasswordKey);
+		verify(messageHelper, times(1)).addError(passwordDoesntMatchesKey);
 	}
 	
 	public static ValidationStrategy<Dog> name(){

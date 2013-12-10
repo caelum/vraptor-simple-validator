@@ -28,6 +28,7 @@ public class SimpleValidator{
 			@Override
 			public void addErrors(T t) {
 				for (ValidationStrategy<T> validationStrategy : validationStrategies) {
+					validationStrategy.setDependencies(validator, messageHelper);
 					validationStrategy.addErrors(t);
 				}
 			}

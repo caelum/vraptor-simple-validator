@@ -8,13 +8,9 @@ public abstract class ValidationStrategy<T> {
 	
 	public abstract void addErrors(T t);
 	
-	protected ValidationStrategy<T> setDependencies(Validator validator, MessageHelper messageHelper) {
-		this.validator = validator;
-		this.messages = messageHelper;
-		return this;
-	}
 	
 	protected void process(T t) {
+		if(messages == null || validator == null) throw new IllegalStateException("The dependencies of strategy "+this.getClass()+" were not set");
 		addErrors(t);
 		validator.validate(t);
 	}
@@ -29,5 +25,12 @@ public abstract class ValidationStrategy<T> {
 	
 	public void addConfirmation(String message, Object[] parameters) {
 		messages.addConfirmation(message, parameters).onResult();		
+	}
+
+	protected ValidationStrategy<T> setDependencies(Validator validator,
+			MessageHelper messageHelper) {
+		this.validator = validator;
+		this.messages = messageHelper;
+		return this;
 	}
 }

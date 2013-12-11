@@ -5,7 +5,7 @@ import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerT
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.matches;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmptyNorNull;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategiesTest.NUMBER_ERROR_KEY;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategiesTest.ERROR_KEY;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,7 +48,7 @@ public class SimpleValidatorTest extends SimpleValidatorTestBase{
 	@Test
 	public void should_validate_two_different_objects() {
 		String myDogName = "john";
-		validator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(NUMBER_ERROR_KEY))
+		validator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY))
 					.validate(myDogName, matches(myDogName).key(""));
 		verify(validationStrategyHelper, never()).addError(Mockito.anyString());
 	}

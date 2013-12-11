@@ -62,5 +62,23 @@ public class ValidationStrategies {
 		};
 	}
 	
+	public static SimpleValidationStrategy<String> lengthLessThan(final Long bigger) {
+		return new SimpleValidationStrategy<String>() {
+			@Override
+			public boolean shouldAddError(String string) {
+				return string != null && string.length() >= bigger; 
+			}
+		};
+	}
+	
+	public static SimpleValidationStrategy<String> lengthBiggerThan(final Long lesser) {
+		return new SimpleValidationStrategy<String>() {
+			@Override
+			public boolean shouldAddError(String string) {
+				return string == null || string.length() <= lesser;
+			}
+		};
+	}
+	
 	
 }

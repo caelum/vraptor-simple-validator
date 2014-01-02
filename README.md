@@ -105,24 +105,48 @@ Tip: of course, the structure is exactly the same, so you can create a taglib to
 
 ##Creating a custom `ValidationStrategy`
 
-To create a `ValidationStrategy`, only need to create a class annotated with `@Component` that extends `ValidationStrategy` and implement the method `addErrors` as you desire:
+To create a `ValidationStrategy`, only need to create a class annotated with `@Component` that implements `CustomValidationStrategy<Something>` and implement the method `addErrors` as you desire:
+
 
 ```java
 @Component
-public class DogValidator extends ValidationStrategy<Dog> {
+public class DogValidator implements CustomValidationStrategy<Dog> {
 	@Override
 	public void addErrors(Dog dog) {
-		if(dog == null) addError("invalid.dog");
-		if(dog != null && dog.getNumberOfPaws() < 4)
-			addAlert("dog.has.less.than.4.paws", dog.getNumberOfPaws());
+		if(dog == null)
+			//add some error message
+		else if(dog.getNumberOfPaws() < 4)
+			//add some alert message
 	}	
 }
 ```
 Tip: Yep, it is a vraptor component, so you can inject whatever you want at its constructor.
 
-At your `ValidationStrategy` you can call `addError`, `addAlert` or `addConfirmation`.
+Then inject an instance of `ValidationStrategyHelper` at your `ValidationStrategy` so you can add messages calling `addError`, `addAlert` or `addConfirmation` on it:
+
+```
+
+@Component
+public class DogValidator implements CustomValidationStrategy<Dog> {
+	private final ValidationStrategyHelper helper;	
+
+	public DogValidator(ValidationStrategyHelper helper) {
+		this.helper = helper;
+	}
+
+	@Override
+	public void addErrors(Dog dog) {
+		if(dog == null)
+			helper.addError("invalid.dog");
+		else if(dog.getNumberOfPaws() < 4)
+			helper.addAlert("dog.has.less.than.4.paws", dog.getNumberOfPaws());
+	}	
+}
+```
+
 The difference between `addError` and `addAlert` is just the category(*error* or *alert*),
-but they will be included at the same list(`errors`);
+but they will be included at the same list(`errors`) at view.
+
 The `confirmation` will be included at the `confirmations` list.
 
 To use the custom strategy, just pass its class to the validator:

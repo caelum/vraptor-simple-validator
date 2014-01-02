@@ -32,8 +32,10 @@ Curretly, the following validations are implemented:
 2. `notEmpty()` - Check if the given `List` is not empty
 3. `notEmptyNorNull()` - Check if the given `String` is not empty/null
 4. `notNull()` - Check if the given `Object` is not null
-5. `lessThan(12l)` - Check if the given long is less than 12
-6. `biggerThan(12l)` - Check if the given long is bigger than 12
+5. `lessThan(12l)` - Check if the given `long` is less than 12
+6. `biggerThan(12l)` - Check if the given `long` is bigger than 12
+7. `lengthLessThan(12l)` - Check if the given `String` has length less than 12.
+7. `lengthBiggerThan(12l)` - Check if the given `String` has length bigger than 12.
 
 When using them you will need to tell which `message.properties` key you want to use on error.
 The validation call will as simple as that:

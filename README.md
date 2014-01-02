@@ -126,7 +126,7 @@ Tip: Yep, it is a vraptor component, so you can inject whatever you want at its 
 
 Then inject an instance of `ValidationStrategyHelper` at your `ValidationStrategy` so you can add messages calling `addError`, `addAlert` or `addConfirmation` on it:
 
-```
+```java
 
 @Component
 public class DogValidator implements CustomValidationStrategy<Dog> {

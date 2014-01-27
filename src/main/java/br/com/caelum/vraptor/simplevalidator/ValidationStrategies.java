@@ -87,7 +87,7 @@ public class ValidationStrategies {
 		};
 	}
 
-	public static SimpleValidationStrategy<String> emailIsValid() {
+	public static SimpleValidationStrategy<String> email() {
 		return new SimpleValidationStrategy<String>() {
 
 			@Override

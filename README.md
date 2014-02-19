@@ -146,8 +146,7 @@ public class DogValidator implements CustomValidationStrategy<Dog> {
 }
 ```
 
-The difference between `addError` and `addAlert` is just the category(*error* or *alert*),
-but they will be included at the same list(`errors`) at view.
+The difference between `addError`, `addAlert`  is just the category(*error* or *alert*) and the list that it'll be included at the view (`errors` or `alerts`).
 
 The `confirmation` will be included at the `confirmations` list.
 
@@ -192,7 +191,7 @@ public void newDog(Dog dog) {
 
 ### 3 - The errors will be included at your jsp
 
-All the validation errors/alerts will be automatically included at the list `${errors}` at your jsp.
+All the validation errors will be automatically included at the list `${errors}` and alerts will be included at the list `${alerts}` on your jsp.
 
 
 

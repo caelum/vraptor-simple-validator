@@ -1,6 +1,7 @@
 package br.com.caelum.vraptor.simplevalidator;
 
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerThan;
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.email;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lengthBiggerThan;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lengthLessThan;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
@@ -8,7 +9,10 @@ import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.matches
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmpty;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmptyNorNull;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notNull;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
@@ -113,5 +117,25 @@ public class ValidationStrategiesTest extends SimpleValidatorTestBase{
 	public void should_throw_exception_if_key_is_not_present() {
 		validator.validate("", notEmptyNorNull());
 	}
-
+	
+	@Test
+	public void should_add_error_in_email_not_valid(){
+		String email ="caiocesarcaelum.com";
+		validator.validate(email, email().key(ERROR_KEY));
+		verify(validationStrategyHelper, times(1)).addError(ERROR_KEY);
+	}
+	
+	@Test
+	public void should_add_error_if_email_is_null(){
+		String email = null;
+		validator.validate(email, email().key(ERROR_KEY));
+		verify(validationStrategyHelper, times(1)).addError(ERROR_KEY);
+	}
+	
+	@Test
+	public void should_not_add_error_in_email(){
+		String email = "caiocesar.msouza@gmail.com";
+		validator.validate(email, email().key(ERROR_KEY));
+		verify(validationStrategyHelper, never()).addError(ERROR_KEY);;
+	}
 }

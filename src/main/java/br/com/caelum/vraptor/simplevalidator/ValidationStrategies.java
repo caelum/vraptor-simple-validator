@@ -2,8 +2,6 @@ package br.com.caelum.vraptor.simplevalidator;
 
 import java.util.List;
 
-import javax.swing.text.rtf.RTFEditorKit;
-
 public class ValidationStrategies {
 
 	public static <T> SimpleValidationStrategy<T> and(

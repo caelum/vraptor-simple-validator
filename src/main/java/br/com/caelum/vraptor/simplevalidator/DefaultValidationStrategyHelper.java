@@ -1,11 +1,19 @@
 package br.com.caelum.vraptor.simplevalidator;
 
-import br.com.caelum.vraptor.ioc.Component;
+import javax.inject.Inject;
 
-@Component
+
 public class DefaultValidationStrategyHelper implements ValidationStrategyHelper{
-	private MessageHelper messages;
+	private final MessageHelper messages;
 
+	/**
+	 * @deprecated CDI eyes only
+	 */
+	public DefaultValidationStrategyHelper() {
+		this(null);
+	}
+	
+	@Inject
 	public DefaultValidationStrategyHelper(MessageHelper messages) {
 		this.messages = messages;
 	}

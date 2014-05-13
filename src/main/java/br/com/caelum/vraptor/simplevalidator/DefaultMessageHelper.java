@@ -3,25 +3,33 @@ package br.com.caelum.vraptor.simplevalidator;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.Validator;
-import br.com.caelum.vraptor.ioc.Component;
-import br.com.caelum.vraptor.validator.Message;
+import javax.inject.Inject;
 
-@Component
+import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Message;
+import br.com.caelum.vraptor.validator.Validator;
+
 public class DefaultMessageHelper implements MessageHelper {
 
 	protected static final String CONFIRMATIONS_KEY = "confirmations";
 	protected static final String ALERTS_KEY = "alerts";
 	protected static final String ERRORS_KEY = "errors";
 	
-	private Result result;
-	private MessageFactory factory;
-	private Validator validator;
+	private final Result result;
+	private final MessageFactory factory;
+	private final Validator validator;
 	private List<Message> confirmations = new ArrayList<Message>();
 	private List<Message> alerts = new ArrayList<Message>();
 	private List<Message> errors = new ArrayList<Message>();
-
+	
+	/**
+	 * @deprecated CDI eyes only
+	 */
+	public DefaultMessageHelper() {
+		this(null, null, null);
+	}
+	
+	@Inject
 	public DefaultMessageHelper(Validator validator, Result result, MessageFactory factory) {
 		this.validator = validator;
 		this.result = result;

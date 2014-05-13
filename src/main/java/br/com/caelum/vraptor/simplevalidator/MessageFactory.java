@@ -2,18 +2,25 @@ package br.com.caelum.vraptor.simplevalidator;
 
 import java.util.ResourceBundle;
 
-import br.com.caelum.vraptor.core.Localization;
-import br.com.caelum.vraptor.ioc.Component;
+import javax.inject.Inject;
+
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.validator.Message;
 
-@Component
 public class MessageFactory {
 
-	private ResourceBundle bundle;
-
-	public MessageFactory(Localization localization) {
-		bundle = localization.getBundle();
+	private final ResourceBundle bundle;
+	
+	/**
+	 *@deprecated CDI eyes only 
+	 */
+	public MessageFactory() {
+		this(null);
+	}
+	
+	@Inject
+	public MessageFactory(ResourceBundle bundle) {
+		this.bundle = bundle;
 	}
 	
 	public Message i18nError(String message, Object... parameters) {

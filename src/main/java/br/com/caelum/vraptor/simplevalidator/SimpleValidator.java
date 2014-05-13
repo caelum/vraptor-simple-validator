@@ -1,17 +1,26 @@
 package br.com.caelum.vraptor.simplevalidator;
 
 import static br.com.caelum.vraptor.view.Results.page;
-import br.com.caelum.vraptor.Validator;
-import br.com.caelum.vraptor.ioc.Component;
-import br.com.caelum.vraptor.ioc.Container;
 
-@Component
+import javax.inject.Inject;
+
+import br.com.caelum.vraptor.ioc.Container;
+import br.com.caelum.vraptor.validator.Validator;
+
 public class SimpleValidator{
 	
 	private final Container container;
-	private Validator validator;
-	private DefaultValidationStrategyHelper strategy;
+	private final Validator validator;
+	private final DefaultValidationStrategyHelper strategy;
 
+	/**
+	 * @deprecated CDI eyes only
+	 */
+	public SimpleValidator() {
+		this(null, null, null);
+	}
+	
+	@Inject
 	public SimpleValidator(Validator validator, Container container, DefaultValidationStrategyHelper strategy) {
 		this.validator = validator;
 		this.container = container;

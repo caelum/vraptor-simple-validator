@@ -9,8 +9,6 @@ import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.matches
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmpty;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmptyNorNull;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notNull;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)

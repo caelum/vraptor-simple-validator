@@ -1,11 +1,14 @@
 package br.com.caelum.vraptor.simplevalidator;
 
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.getDefaultKey;
+
 public class AndValidationStrategy<T> extends SimpleValidationStrategy<T> {
 	
 	private final SimpleValidationStrategy<T>[] validations;
 	private final FakeStrategy fakeStrategy = new FakeStrategy();
 
 	public AndValidationStrategy(SimpleValidationStrategy<T>[] validations) {
+		super(getDefaultKey("and"), validations);
 		this.validations = validations;
 	}
 

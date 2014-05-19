@@ -2,24 +2,23 @@ package br.com.caelum.vraptor.simplevalidator;
 
 public abstract class SimpleValidationStrategy<T> implements ValidationStrategy<T> {
 	
-	private String message;
+	private String messageKey;
 	private Object[] parameters;
 	
+	public SimpleValidationStrategy(String defaultKey, Object...defaultParameters) {
+		messageKey = defaultKey;
+		parameters = defaultParameters;
+	}
+
 	public SimpleValidationStrategy<T> key(String message, Object...parameters){
-		this.message = message;
+		this.messageKey = message;
 		this.parameters = parameters;
 		return this;
 	}
 	
 	public void addErrors(T t, ValidationStrategyHelper strategy) {
-		verifyPresenceOfKey();
-		if(shouldAddError(t)) strategy.addError(message, parameters);
+		if(shouldAddError(t)) strategy.addError(messageKey, parameters);
 	}
-	
-	private void verifyPresenceOfKey() {
-		if(message == null) throw new IllegalStateException("Please, give me the message.properties key so I can tell you the error. Syntax: validator.validate(obj, strategy().key(\"my.key\"))");
-	}
-
 	
 	protected abstract boolean shouldAddError(T t);
 }

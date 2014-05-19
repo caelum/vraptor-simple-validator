@@ -54,6 +54,13 @@ public class SimpleValidatorTest extends SimpleValidatorTestBase{
 	}
 	
 	@Test
+	public void should_use_the_default_ValidationStrategy_message() {
+		String myDogName = "john";
+		validator.validate(3l, lessThan(2l));
+		verify(validationStrategyHelper).addError("ValidationStrategies.lessThan", 2l);
+	}
+	
+	@Test
 	public void should_validate_two_null_strings() {
 		String emptyPasswordKey = "empty.password";
 		String emptyNewPasswordKey = "empty.new.password";

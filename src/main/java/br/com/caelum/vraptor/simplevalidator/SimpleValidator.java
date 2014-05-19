@@ -1,5 +1,6 @@
 package br.com.caelum.vraptor.simplevalidator;
 
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.getDefaultKey;
 import static br.com.caelum.vraptor.view.Results.page;
 
 import javax.inject.Inject;
@@ -54,7 +55,7 @@ public class SimpleValidator{
 	}
 	
 	public <T> SimpleValidator validate(T t, final SimpleValidationStrategy<T>... validationStrategy) {
-		return validate(t, new SimpleValidationStrategy<T>() {
+		return validate(t, new SimpleValidationStrategy<T>(getDefaultKey("varargs"), validationStrategy) {
 
 			@Override
 			public void addErrors(T t, ValidationStrategyHelper strategy) {

@@ -110,11 +110,6 @@ public class ValidationStrategiesTest extends SimpleValidatorTestBase{
 		verify(validationStrategyHelper, never()).addError(ERROR_KEY);
 	}
 	
-	@Test(expected=IllegalStateException.class)
-	public void should_throw_exception_if_key_is_not_present() {
-		validator.validate("", notEmptyNorNull());
-	}
-	
 	@Test
 	public void should_add_error_in_email_not_valid(){
 		String email ="caiocesarcaelum.com";

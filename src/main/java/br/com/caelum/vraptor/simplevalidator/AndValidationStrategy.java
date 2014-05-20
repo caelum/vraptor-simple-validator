@@ -7,8 +7,9 @@ public class AndValidationStrategy<T> extends SimpleValidationStrategy<T> {
 	private final SimpleValidationStrategy<T>[] validations;
 	private final FakeStrategy fakeStrategy = new FakeStrategy();
 
-	public AndValidationStrategy(SimpleValidationStrategy<T>[] validations) {
-		super(getDefaultKey("and"), validations);
+	public AndValidationStrategy(String defaultKey,
+			SimpleValidationStrategy<T>[] validations) {
+		super(defaultKey, validations);
 		this.validations = validations;
 	}
 

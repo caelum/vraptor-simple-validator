@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.simplevalidator;
 
+import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.getDefaultKey;
+
 import java.util.List;
 
 public class ValidationStrategies {
@@ -14,9 +16,10 @@ public class ValidationStrategies {
 	protected static final String DEFAULT_MATCHES_KEY = getDefaultKey("matches");
 	protected static final String DEFAULT_LENGTH_BIGGER_KEY = getDefaultKey("lengthBiggerThan");
 	protected static final String DEFAULT_LENGTH_LESS_KEY = getDefaultKey("lengthLessThan");
+	protected static final String DEFAULT_AND_KEY = getDefaultKey("and");
 
 	public static <T> SimpleValidationStrategy<T> and(final SimpleValidationStrategy<T>... validations) {
-		return new AndValidationStrategy<T>(validations);
+		return new AndValidationStrategy<T>(DEFAULT_AND_KEY, validations);
 	}
 
 	public static SimpleValidationStrategy<List> notEmpty() {

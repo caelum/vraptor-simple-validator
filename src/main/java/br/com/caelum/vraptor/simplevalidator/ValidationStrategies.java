@@ -3,13 +3,24 @@ package br.com.caelum.vraptor.simplevalidator;
 import java.util.List;
 
 public class ValidationStrategies {
+	
+
+	protected static final String DEFAULT_NOT_EMPTY_KEY = getDefaultKey("notEmpty");
+	protected static final String DEFAULT_NOT_NULL_KEY = getDefaultKey("notNull");
+	protected static final String DEFAULT_NOT_EMPTY_NOR_NULL_KEY = getDefaultKey("notEmptyNorNull");
+	protected static final String DEFAULT_LESS_THAN_KEY = getDefaultKey("lessThan");
+	protected static final String DEFAULT_BIGGER_THAN_KEY = getDefaultKey("biggerThan");
+	protected static final String DEFAULT_EMAIL_KEY = getDefaultKey("email");
+	protected static final String DEFAULT_MATCHES_KEY = getDefaultKey("matches");
+	protected static final String DEFAULT_LENGTH_BIGGER_KEY = getDefaultKey("lengthBiggerThan");
+	protected static final String DEFAULT_LENGTH_LESS_KEY = getDefaultKey("lengthLessThan");
 
 	public static <T> SimpleValidationStrategy<T> and(final SimpleValidationStrategy<T>... validations) {
 		return new AndValidationStrategy<T>(validations);
 	}
 
 	public static SimpleValidationStrategy<List> notEmpty() {
-		return new SimpleValidationStrategy<List>(getDefaultKey("notEmpty")) {
+		return new SimpleValidationStrategy<List>(DEFAULT_NOT_EMPTY_KEY) {
 			@Override
 			public boolean shouldAddError(List list) {
 				return list.isEmpty();
@@ -18,7 +29,7 @@ public class ValidationStrategies {
 	}
 
 	public static SimpleValidationStrategy<String> matches(final String matchingString) {
-		return new SimpleValidationStrategy<String>(getDefaultKey("matches"), matchingString) {
+		return new SimpleValidationStrategy<String>(DEFAULT_MATCHES_KEY, matchingString) {
 			@Override
 			public boolean shouldAddError(String string) {
 				return string == null || matchingString == null
@@ -28,7 +39,7 @@ public class ValidationStrategies {
 	}
 
 	public static SimpleValidationStrategy<String> notEmptyNorNull() {
-		return new SimpleValidationStrategy<String>(getDefaultKey("notEmptyNorNull")) {
+		return new SimpleValidationStrategy<String>(DEFAULT_NOT_EMPTY_NOR_NULL_KEY) {
 			@Override
 			public boolean shouldAddError(String string) {
 				return string == null || string.isEmpty();
@@ -38,7 +49,7 @@ public class ValidationStrategies {
 	}
 
 	public static SimpleValidationStrategy<Object> notNull() {
-		return new SimpleValidationStrategy<Object>(getDefaultKey("notNull")) {
+		return new SimpleValidationStrategy<Object>(DEFAULT_NOT_NULL_KEY) {
 			@Override
 			public boolean shouldAddError(Object obj) {
 				return obj == null;
@@ -47,7 +58,7 @@ public class ValidationStrategies {
 	}
 
 	public static SimpleValidationStrategy<Long> lessThan(final Long bigger) {
-		return new SimpleValidationStrategy<Long>(getDefaultKey("lessThan"), bigger) {
+		return new SimpleValidationStrategy<Long>(DEFAULT_LESS_THAN_KEY, bigger) {
 			
 			@Override
 			public boolean shouldAddError(Long number) {
@@ -57,7 +68,7 @@ public class ValidationStrategies {
 	}
 
 	public static SimpleValidationStrategy<Long> biggerThan(final Long lesser) {
-		return new SimpleValidationStrategy<Long>(getDefaultKey("biggerThan"), lesser) {
+		return new SimpleValidationStrategy<Long>(DEFAULT_BIGGER_THAN_KEY, lesser) {
 			@Override
 			public boolean shouldAddError(Long number) {
 				return number <= lesser;
@@ -66,7 +77,7 @@ public class ValidationStrategies {
 	}
 
 	public static SimpleValidationStrategy<String> lengthLessThan(final Long bigger) {
-		return new SimpleValidationStrategy<String>(getDefaultKey("lengthLessThan"), bigger) {
+		return new SimpleValidationStrategy<String>(DEFAULT_LENGTH_LESS_KEY, bigger) {
 			@Override
 			public boolean shouldAddError(String string) {
 				return string != null && string.length() >= bigger;
@@ -75,7 +86,7 @@ public class ValidationStrategies {
 	}
 
 	public static SimpleValidationStrategy<String> lengthBiggerThan(final Long lesser) {
-		return new SimpleValidationStrategy<String>(getDefaultKey("lengthBiggerThan"), lesser) {
+		return new SimpleValidationStrategy<String>(DEFAULT_LENGTH_BIGGER_KEY, lesser) {
 			@Override
 			public boolean shouldAddError(String string) {
 				return string == null || string.length() <= lesser;

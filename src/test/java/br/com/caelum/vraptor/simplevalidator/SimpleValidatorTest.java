@@ -5,7 +5,6 @@ import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerT
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.matches;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmptyNorNull;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategiesTest.ERROR_KEY;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,14 +47,28 @@ public class SimpleValidatorTest extends SimpleValidatorTestBase{
 	@Test
 	public void should_validate_two_different_objects() {
 		String myDogName = "john";
-		validator.validate(1l, and(lessThan(2l), biggerThan(0l)).key(ERROR_KEY))
-					.validate(myDogName, matches(myDogName).key(""));
+		validator.validate(1l, and(lessThan(2l), biggerThan(0l)))
+					.validate(myDogName, matches(myDogName));
 		verify(validationStrategyHelper, never()).addError(Mockito.anyString());
+	}
+
+	@Test
+	public void should_use_a_custom_validation_message() {
+		String customKey = "custom.key";
+		validator.validate(3l, lessThan(2l).key(customKey));
+		verify(validationStrategyHelper).addError(customKey);
+	}
+	
+	@Test
+	public void should_use_a_custom_validation_message_with_custom_parameters() {
+		String customKey = "custom.key";
+		long number = 3l;
+		validator.validate(number, lessThan(2l).key(customKey, number));
+		verify(validationStrategyHelper).addError(customKey, number);
 	}
 	
 	@Test
 	public void should_use_the_default_ValidationStrategy_message() {
-		String myDogName = "john";
 		validator.validate(3l, lessThan(2l));
 		verify(validationStrategyHelper).addError("ValidationStrategies.lessThan", 2l);
 	}

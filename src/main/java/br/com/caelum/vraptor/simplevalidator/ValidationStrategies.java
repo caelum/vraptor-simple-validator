@@ -1,12 +1,8 @@
 package br.com.caelum.vraptor.simplevalidator;
 
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.getDefaultKey;
-
 import java.util.List;
 
 public class ValidationStrategies {
-	
-
 	protected static final String DEFAULT_NOT_EMPTY_KEY = getDefaultKey("notEmpty");
 	protected static final String DEFAULT_NOT_NULL_KEY = getDefaultKey("notNull");
 	protected static final String DEFAULT_NOT_EMPTY_NOR_NULL_KEY = getDefaultKey("notEmptyNorNull");
@@ -19,7 +15,7 @@ public class ValidationStrategies {
 	protected static final String DEFAULT_AND_KEY = getDefaultKey("and");
 
 	public static <T> SimpleValidationStrategy<T> and(final SimpleValidationStrategy<T>... validations) {
-		return new AndValidationStrategy<T>(DEFAULT_AND_KEY, validations);
+		return new AndValidationStrategy<T>(validations);
 	}
 
 	public static SimpleValidationStrategy<List> notEmpty() {

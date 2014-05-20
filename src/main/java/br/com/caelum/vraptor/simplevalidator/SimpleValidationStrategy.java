@@ -16,6 +16,11 @@ public abstract class SimpleValidationStrategy<T> implements ValidationStrategy<
 		return this;
 	}
 	
+	public SimpleValidationStrategy<T> parameters(Object...parameters){
+		this.parameters = parameters;
+		return this;
+	}
+	
 	public void addErrors(T t, ValidationStrategyHelper strategy) {
 		if(shouldAddError(t)) strategy.addError(messageKey, parameters);
 	}

@@ -1,25 +1,25 @@
 package br.com.caelum.vraptor.simplevalidator;
 
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.getDefaultKey;
 
 public class AndValidationStrategy<T> extends SimpleValidationStrategy<T> {
 	
 	private final SimpleValidationStrategy<T>[] validations;
-	private final FakeStrategy fakeStrategy = new FakeStrategy();
 
-	public AndValidationStrategy(String defaultKey,
-			SimpleValidationStrategy<T>[] validations) {
-		super(defaultKey, validations);
+	public AndValidationStrategy(SimpleValidationStrategy<T>[] validations) {
+		super("", validations);
 		this.validations = validations;
 	}
 
 	@Override
 	public boolean shouldAddError(T obj) {
+		return false;
+	}
+	
+	@Override
+	public void addErrors(T obj, ValidationStrategyHelper strategy) {
 		for (SimpleValidationStrategy<T> validation : validations) {
-			validation.addErrors(obj, fakeStrategy);
+			validation.addErrors(obj, strategy);
 		}
-		boolean thereAreValidationErrors = fakeStrategy.isInvalid();
-		return thereAreValidationErrors;
 	}
 		
 	@Override

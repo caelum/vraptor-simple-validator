@@ -18,7 +18,7 @@ public class SimpleValidator{
 	/**
 	 * @deprecated CDI eyes only
 	 */
-	public SimpleValidator() {
+	protected SimpleValidator() {
 		this(null, null, null);
 	}
 	

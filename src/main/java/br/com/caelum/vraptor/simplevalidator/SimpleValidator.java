@@ -5,6 +5,7 @@ import static br.com.caelum.vraptor.view.Results.page;
 
 import javax.inject.Inject;
 
+import br.com.caelum.vraptor.View;
 import br.com.caelum.vraptor.ioc.Container;
 import br.com.caelum.vraptor.validator.Validator;
 
@@ -17,7 +18,7 @@ public class SimpleValidator{
 	/**
 	 * @deprecated CDI eyes only
 	 */
-	public SimpleValidator() {
+	protected SimpleValidator() {
 		this(null, null, null);
 	}
 	
@@ -101,5 +102,9 @@ public class SimpleValidator{
 
 	public <C> C onErrorUsePageOf(C controller) {
 		return validator.onErrorUsePageOf(controller);
+	}
+	
+	public <T extends View> T onErrorUse(Class<T> view) {
+		return validator.onErrorUse(view);
 	}
 }

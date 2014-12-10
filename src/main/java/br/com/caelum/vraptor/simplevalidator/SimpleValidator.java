@@ -22,9 +22,7 @@ public class SimpleValidator{
 	 * @deprecated CDI eyes only
 	 */
 	protected SimpleValidator() {
-		container = null;
-		validator = null;
-		strategy = null;
+		this(null, null, null);
 	}
 	
 	@Inject

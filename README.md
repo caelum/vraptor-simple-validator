@@ -7,7 +7,7 @@ For a quick start, you can use this snippet in your maven POM:
 
 ```xml
 <dependency>
-    <groupId>br.com.caelum</groupId>
+    <groupId>br.com.caelum.vraptor</groupId>
     <artifactId>vraptor-simple-validator</artifactId>
     <version>4.1.0-RC2</version> <!--or the latest version-->
 </dependency>

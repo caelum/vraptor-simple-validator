@@ -1,10 +1,10 @@
-package br.com.caelum.vraptor.simplevalidator;
+package br.com.caelum.vraptor.simplevalidator.strategy;
 
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.DEFAULT_BIGGER_THAN_KEY;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.DEFAULT_LESS_THAN_KEY;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.and;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerThan;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.DEFAULT_BIGGER_THAN_KEY;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.DEFAULT_LESS_THAN_KEY;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.and;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.biggerThan;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.lessThan;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -14,6 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import br.com.caelum.vraptor.simplevalidator.SimpleValidationStrategy;
+import br.com.caelum.vraptor.simplevalidator.SimpleValidatorTestBase;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AndValidationStrategyTest extends SimpleValidatorTestBase{
@@ -28,12 +31,14 @@ public class AndValidationStrategyTest extends SimpleValidatorTestBase{
 	}
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void should_not_add_errors_if_everyting_goes_fine() {
 		validator.validate(1l, and(lessThan2, biggerThan0));
 		verify(validationStrategyHelper, never()).addError(anyString());
 	}
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void should_not_add_two_errors_to_and_rule() {
 		SimpleValidationStrategy<Long> biggerThan2 = biggerThan(2l);
 		SimpleValidationStrategy<Long> lessThan0 = lessThan(0l);

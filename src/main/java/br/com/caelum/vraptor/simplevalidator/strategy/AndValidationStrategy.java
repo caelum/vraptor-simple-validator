@@ -1,10 +1,13 @@
-package br.com.caelum.vraptor.simplevalidator;
+package br.com.caelum.vraptor.simplevalidator.strategy;
+
+import br.com.caelum.vraptor.simplevalidator.SimpleValidationStrategy;
 
 
 public class AndValidationStrategy<T> extends SimpleValidationStrategy<T> {
 	
 	private final SimpleValidationStrategy<T>[] validations;
 
+	@SuppressWarnings ("all")
 	public AndValidationStrategy(SimpleValidationStrategy<T>[] validations) {
 		super("", validations);
 		this.validations = validations;

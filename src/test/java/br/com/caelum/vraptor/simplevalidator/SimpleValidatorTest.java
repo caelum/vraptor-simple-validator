@@ -1,10 +1,10 @@
 package br.com.caelum.vraptor.simplevalidator;
 
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.and;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.biggerThan;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.lessThan;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.matches;
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.notEmptyNorNull;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.and;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.biggerThan;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.lessThan;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.matches;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.notEmptyNorNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import br.com.caelum.vraptor.simplevalidator.strategy.CustomValidationStrategy;
+import br.com.caelum.vraptor.simplevalidator.strategy.DefaultValidationStrategyHelper;
 import br.com.caelum.vraptor.util.test.MockResult;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -45,6 +47,7 @@ public class SimpleValidatorTest extends SimpleValidatorTestBase{
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void should_validate_two_different_objects() {
 		String myDogName = "john";
 		validator.validate(1l, and(lessThan(2l), biggerThan(0l)))
@@ -74,6 +77,7 @@ public class SimpleValidatorTest extends SimpleValidatorTestBase{
 	}
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void should_validate_two_null_strings() {
 		String emptyPasswordKey = "empty.password";
 		String emptyNewPasswordKey = "empty.new.password";

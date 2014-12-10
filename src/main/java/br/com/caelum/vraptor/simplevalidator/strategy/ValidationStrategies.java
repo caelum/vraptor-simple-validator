@@ -1,6 +1,8 @@
-package br.com.caelum.vraptor.simplevalidator;
+package br.com.caelum.vraptor.simplevalidator.strategy;
 
 import java.util.List;
+
+import br.com.caelum.vraptor.simplevalidator.SimpleValidationStrategy;
 
 public class ValidationStrategies {
 	protected static final String DEFAULT_NOT_EMPTY_KEY = getDefaultKey("notEmpty");
@@ -18,6 +20,7 @@ public class ValidationStrategies {
 		return new AndValidationStrategy<T>(validations);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static SimpleValidationStrategy<List> notEmpty() {
 		return new SimpleValidationStrategy<List>(DEFAULT_NOT_EMPTY_KEY) {
 			@Override
@@ -105,7 +108,7 @@ public class ValidationStrategies {
 		};
 	}
 	
-	protected static String getDefaultKey(String key) {
+	public static String getDefaultKey(String key) {
 		return ValidationStrategies.class.getSimpleName()+"."+key;
 	}
 

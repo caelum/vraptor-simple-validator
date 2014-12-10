@@ -1,5 +1,8 @@
 package br.com.caelum.vraptor.simplevalidator;
 
+import br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategy;
+import br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategyHelper;
+
 public abstract class SimpleValidationStrategy<T> implements ValidationStrategy<T> {
 	
 	private String messageKey;

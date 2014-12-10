@@ -6,17 +6,19 @@ import org.junit.Before;
 import org.mockito.Mock;
 
 import br.com.caelum.vraptor.ioc.Container;
+import br.com.caelum.vraptor.simplevalidator.strategy.DefaultValidationStrategyHelper;
 import br.com.caelum.vraptor.util.test.MockValidator;
 
 public class SimpleValidatorTestBase {
-	SimpleValidator validator;
-	MockValidator vraptorValidator;
+	
+	public SimpleValidator validator;
+	public MockValidator vraptorValidator;
 	@Mock
-	Container container;
+	public Container container;
 	@Mock
-	DefaultValidationStrategyHelper strategy;
+	public DefaultValidationStrategyHelper strategy;
 	@Mock
-	DefaultValidationStrategyHelper validationStrategyHelper;
+	public DefaultValidationStrategyHelper validationStrategyHelper;
 	
 	@Before
 	public void setUp() {

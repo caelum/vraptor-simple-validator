@@ -3,24 +3,22 @@ package br.com.caelum.vraptor.simplevalidator;
 import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.getDefaultKey;
 import static br.com.caelum.vraptor.view.Results.page;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.View;
 import br.com.caelum.vraptor.ioc.Container;
+import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.Validator;
 
 public class SimpleValidator{
 	
-	private final Container container;
-	private final Validator validator;
-	private final DefaultValidationStrategyHelper strategy;
+	protected Container container;
+	protected Validator validator;
+	protected DefaultValidationStrategyHelper strategy;
 
-	/**
-	 * @deprecated CDI eyes only
-	 */
-	protected SimpleValidator() {
-		this(null, null, null);
-	}
+	protected SimpleValidator() {}
 	
 	@Inject
 	public SimpleValidator(Validator validator, Container container, DefaultValidationStrategyHelper strategy) {
@@ -55,6 +53,7 @@ public class SimpleValidator{
 		return this;
 	}
 	
+	@SuppressWarnings("all")
 	public <T> SimpleValidator validate(T t, final SimpleValidationStrategy<T>... validationStrategy) {
 		return validate(t, new SimpleValidationStrategy<T>(getDefaultKey("varargs"), validationStrategy) {
 
@@ -107,4 +106,13 @@ public class SimpleValidator{
 	public <T extends View> T onErrorUse(Class<T> view) {
 		return validator.onErrorUse(view);
 	}
+	
+	public void onErrorSendBadRequest() {
+		validator.onErrorSendBadRequest();
+	}
+	
+	public List<Message> getErrors() {
+		return validator.getErrors();
+	}
+	
 }

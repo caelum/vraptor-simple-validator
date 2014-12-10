@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.simplevalidator;
+package br.com.caelum.vraptor.simplevalidator.message;
 
 public interface MessageHelper {
 

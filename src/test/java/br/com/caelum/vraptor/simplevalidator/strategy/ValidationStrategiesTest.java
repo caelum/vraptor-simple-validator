@@ -1,6 +1,6 @@
-package br.com.caelum.vraptor.simplevalidator;
+package br.com.caelum.vraptor.simplevalidator.strategy;
 
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.*;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import br.com.caelum.vraptor.simplevalidator.SimpleValidatorTestBase;
+import br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ValidationStrategiesTest extends SimpleValidatorTestBase{

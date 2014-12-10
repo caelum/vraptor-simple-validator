@@ -1,12 +1,15 @@
 package br.com.caelum.vraptor.simplevalidator;
 
-import static br.com.caelum.vraptor.simplevalidator.ValidationStrategies.getDefaultKey;
+import static br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategies.getDefaultKey;
 import static br.com.caelum.vraptor.view.Results.page;
 
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.View;
 import br.com.caelum.vraptor.ioc.Container;
+import br.com.caelum.vraptor.simplevalidator.strategy.CustomValidationStrategy;
+import br.com.caelum.vraptor.simplevalidator.strategy.DefaultValidationStrategyHelper;
+import br.com.caelum.vraptor.simplevalidator.strategy.ValidationStrategyHelper;
 import br.com.caelum.vraptor.validator.Validator;
 
 public class SimpleValidator{
@@ -55,6 +58,7 @@ public class SimpleValidator{
 		return this;
 	}
 	
+	@SuppressWarnings ("all")
 	public <T> SimpleValidator validate(T t, final SimpleValidationStrategy<T>... validationStrategy) {
 		return validate(t, new SimpleValidationStrategy<T>(getDefaultKey("varargs"), validationStrategy) {
 

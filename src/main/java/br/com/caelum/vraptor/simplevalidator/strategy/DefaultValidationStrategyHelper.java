@@ -1,6 +1,8 @@
-package br.com.caelum.vraptor.simplevalidator;
+package br.com.caelum.vraptor.simplevalidator.strategy;
 
 import javax.inject.Inject;
+
+import br.com.caelum.vraptor.simplevalidator.message.MessageHelper;
 
 
 public class DefaultValidationStrategyHelper implements ValidationStrategyHelper{

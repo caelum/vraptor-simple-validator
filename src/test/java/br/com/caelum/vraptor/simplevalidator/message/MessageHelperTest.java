@@ -1,6 +1,6 @@
-package br.com.caelum.vraptor.simplevalidator;
+package br.com.caelum.vraptor.simplevalidator.message;
 
-import static br.com.caelum.vraptor.simplevalidator.DefaultMessageHelper.CONFIRMATIONS_KEY;
+import static br.com.caelum.vraptor.simplevalidator.message.DefaultMessageHelper.CONFIRMATIONS_KEY;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.atLeastOnce;
@@ -40,6 +40,7 @@ public class MessageHelperTest {
 	}
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void should_add_message_into_validator_only() {
 		helper.addConfirmation("test").onValidator();
 		verify(validator, atLeastOnce()).addAll(any(Collection.class));

@@ -6,7 +6,7 @@ Vraptor Simple Validator
 ### 1 - Inject the `SimpleValidator` at your controller:
 
 ```java
-@Resource
+@Controller
 public class DogController {
 	
 	private SimpleValidator validator;

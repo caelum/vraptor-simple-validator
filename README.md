@@ -1,6 +1,18 @@
 Vraptor Simple Validator 
 ========================
 
+##Downloading directly or using it through Maven
+
+For a quick start, you can use this snippet in your maven POM:
+
+```xml
+<dependency>
+    <groupId>br.com.caelum</groupId>
+    <artifactId>vraptor-simple-validator</artifactId>
+    <version>4.1.0-RC2</version> <!--or the latest version-->
+</dependency>
+```
+
 ##How to use
 
 ### 1 - Inject the `SimpleValidator` at your controller:

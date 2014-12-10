@@ -14,11 +14,18 @@ import br.com.caelum.vraptor.validator.Validator;
 
 public class SimpleValidator{
 	
-	protected Container container;
-	protected Validator validator;
-	protected DefaultValidationStrategyHelper strategy;
+	private final Container container;
+	private final Validator validator;
+	private final DefaultValidationStrategyHelper strategy;
 
-	protected SimpleValidator() {}
+	/**
+	 * @deprecated CDI eyes only
+	 */
+	protected SimpleValidator() {
+		container = null;
+		validator = null;
+		strategy = null;
+	}
 	
 	@Inject
 	public SimpleValidator(Validator validator, Container container, DefaultValidationStrategyHelper strategy) {

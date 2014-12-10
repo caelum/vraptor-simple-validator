@@ -22,7 +22,7 @@ public class SimpleValidatorMockTest {
 
 	@Before
 	public void setUp() {
-		validator = spy(new SimpleValidatorMock());
+		validator = spy(SimpleValidatorMock.getInstance());
 		bundle = ResourceBundle.getBundle("messages");
 	}
 
